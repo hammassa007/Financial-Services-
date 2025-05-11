@@ -1,0 +1,12 @@
+{
+  "orgName": "FinancialServices",
+  "edition": "Developer",
+  "features": ["PersonAccounts", "FinancialServicesCloud"],
+  "hasSampleData": true,
+  "settings": {
+    "orgPreferenceSettings": {
+      "s1DesktopEnabled": true,
+      "personAccountsEnabled": true
+    }
+  }
+}
