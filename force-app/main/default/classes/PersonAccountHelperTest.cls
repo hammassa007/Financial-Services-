@@ -1,41 +1,42 @@
 /**
  * @Author       : Mohammad Arafat Ali
  * @Description  : Test class for PersonAccountHelper class
- * @Date         : 05-11-2025
+ * @Date         : 05-12-2025
 **/
 @isTest
 public class PersonAccountHelperTest {
 
-    @isTest
-    static void testLogPersonAccountsAsJson() {
-        // Step 1: Get the Person Account record type
-        RecordType personAccountRT = [
-            SELECT Id FROM RecordType 
-            WHERE SObjectType = 'Account' 
-            AND Name = 'Person Account' 
-            LIMIT 1
-        ];
+    @testSetup
+    public static void setupTestData() {
+        // Get the Person Account record type
+        Id personAccountRTId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
 
-        // Step 2: Create test Person Account records
+        // Create test Person Account records
         List<Account> testAccounts = new List<Account>{
             new Account(
                 FirstName = 'Test',
                 LastName = 'User1',
-                RecordTypeId = personAccountRT.Id
+                RecordTypeId = personAccountRTId
             ),
             new Account(
                 FirstName = 'Test',
                 LastName = 'User2',
-                RecordTypeId = personAccountRT.Id
+                RecordTypeId = personAccountRTId
             )
         };
         insert testAccounts;
+    }
 
-        // Step 3: Call the method under test
+    @isTest
+    public static void testLogPersonAccountsAsJson() {
+        // Verify test setup
+        List<Account> insertedAccounts = [SELECT Id, FirstName, LastName, Name FROM Account WHERE IsPersonAccount = TRUE];
+        
+        // Execute the method under test
         Test.startTest();
         PersonAccountHelper.logPersonAccountsAsJson();
         Test.stopTest();
 
-        System.assertEquals(2, [SELECT Count() FROM Account WHERE IsPersonAccount = true AND Id IN :testAccounts]);
+        System.assertEquals(2, insertedAccounts.size(), 'Exactly two Person Accounts should exist');
     }
 }

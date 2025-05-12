@@ -2,15 +2,20 @@
  * @Author       : Mohammad Arafat Ali
  * @Description  : Apex class to show Person Account Id as Key
  *               : and Person Account Record as Value of a map in Debug
- * @Date         : 05-11-2025
+ * @Date         : 05-12-2025
 **/
 public without sharing class PersonAccountHelper {
     public static void logPersonAccountsAsJson() {
-        List<Account> accounts = [SELECT Id, FirstName, LastName, Name FROM Account WHERE IsPersonAccount = true];
-        Map<Id, Account> accountMap = new Map<Id, Account>();
-        for (Account acc : accounts) {
+        try{
+            Map<Id, Account> accountMap = new Map<Id, Account>();
+            for (Account acc : [SELECT Id, FirstName, LastName, Name FROM Account WHERE IsPersonAccount = true]) {
             accountMap.put(acc.Id, acc);
         }
-        System.debug(JSON.serializePretty(accountMap));
+            System.debug('Person Account Map: ' + JSON.serializePretty(accountMap));            
+        }
+        catch (Exception e) {
+            System.debug('Error occurred while retrieving Person Accounts: ' + e.getMessage());
+            System.debug('Stack Trace: ' + e.getStackTraceString());
+        }
     }
 }

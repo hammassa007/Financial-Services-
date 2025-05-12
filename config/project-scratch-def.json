@@ -1,12 +1,20 @@
 {
-  "orgName": "FinancialServices",
-  "edition": "Developer",
-  "features": ["PersonAccounts", "FinancialServicesCloud"],
+  "orgName": "Financial Services",
+  "edition": "Enterprise",
   "hasSampleData": true,
+  "features": ["PersonAccounts", "FinancialServicesUser:5"],
   "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
     "orgPreferenceSettings": {
       "s1DesktopEnabled": true,
       "personAccountsEnabled": true
     }
-  }
+  },
+  "objectSettings": {
+    "account": {
+       "defaultRecordType": "Person Account"
+    }
+ }
 }
