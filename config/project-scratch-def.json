@@ -6,10 +6,6 @@
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
-    },
-    "orgPreferenceSettings": {
-      "s1DesktopEnabled": true,
-      "personAccountsEnabled": true
     }
   },
   "objectSettings": {
